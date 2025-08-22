@@ -36,7 +36,7 @@ C/C++语法问题：
 
 汇编以及编译器：
 
-[第1期：编译符号和汇编语言](.\Coding\ASM\Compile.md)
+[第1期：编译符号和汇编语言](./Coding/ASM/Compile.md)
 
 多文件项目构建：
 
