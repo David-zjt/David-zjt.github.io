@@ -42,4 +42,4 @@ C/C++语法问题：
 
 Makefile语法：
 
-[第1期：makefile语法基础](.\Coding\Makefile\makefile_basic.md)
+[第1期：makefile语法基础](./Coding/Makefile/makefile_basic.md)
