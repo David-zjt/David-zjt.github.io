@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub风格博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f6f8fa;
+            color: #24292e;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #24292e;
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .logo i {
+            color: #f9826c;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: #f9826c;
+        }
+        
+        /* 主要内容区域 */
+        main {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: white;
+            border-radius: 6px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .profile {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f6f8fa;
+            margin-bottom: 16px;
+        }
+        
+        .profile h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .profile p {
+            color: #586069;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .social-links a {
+            color: #586069;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+        
+        .social-links a:hover {
+            color: #0366d6;
+        }
+        
+        .categories {
+            margin-top: 24px;
+        }
+        
+        .categories h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        
+        .categories ul {
+            list-style: none;
+        }
+        
+        .categories li {
+            margin-bottom: 8px;
+        }
+        
+        .categories a {
+            color: #0366d6;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .categories a:hover {
+            text-decoration: underline;
+        }
+        
+        .count {
+            background-color: #e1e4e8;
+            color: #24292e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        /* 博客文章区域 */
+        .blog-content {
+            flex: 1;
+        }
+        
+        .blog-header {
+            margin-bottom: 24px;
+        }
+        
+        .blog-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .blog-header p {
+            color: #586069;
+        }
+        
+        .articles {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .article {
+            background-color: white;
+            border-radius: 6px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .article:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .article-title {
+            font-size: 20px;
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .article-title:hover {
+            text-decoration: underline;
+        }
+        
+        .article-date {
+            color: #586069;
+            font-size: 14px;
+        }
+        
+        .article-excerpt {
+            color: #586069;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .tag:hover {
+            background-color: #dbedff;
+        }
+        
+        /* 分页 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 8px;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .pagination a:hover {
+            background-color: #f6f8fa;
+        }
+        
+        .pagination .active {
+            background-color: #0366d6;
+            color: white;
+            border-color: #0366d6;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #24292e;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #f9826c;
+        }
+        
+        .footer-section p {
+            color: #8b949e;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #8b949e;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: #f9826c;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #2f363d;
+            color: #8b949e;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: none;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            nav ul {
+                gap: 16px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .article-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fab fa-github"></i>
+                <span>GitHub博客</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> 文章</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> 标签</a></li>
+                    <li><a href="#"><i class="fas fa-archive"></i> 归档</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> 关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <main>
+            <!-- 侧边栏 -->
+            <aside class="sidebar">
+                <div class="profile">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="用户头像" class="avatar">
+                    <h2>开发者小明</h2>
+                    <p>全栈开发者 | 开源爱好者</p>
+                    <p>热爱编程，喜欢分享技术文章</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="categories">
+                    <h3>文章分类</h3>
+                    <ul>
+                        <li><a href="#">前端开发 <span class="count">12</span></a></li>
+                        <li><a href="#">后端开发 <span class="count">8</span></a></li>
+                        <li><a href="#">DevOps <span class="count">5</span></a></li>
+                        <li><a href="#">算法与数据结构 <span class="count">7</span></a></li>
+                        <li><a href="#">开源项目 <span class="count">3</span></a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- 博客文章区域 -->
+            <section class="blog-content">
+                <div class="blog-header">
+                    <h1>最新文章</h1>
+                    <p>分享技术见解与开发经验</p>
+                </div>
+                
+                <div class="articles">
+                    <!-- 文章1 -->
+                    <article class="article">
+                        <div class="article-header">
+                            <a href="#" class="article-title">使用Vue 3和Composition API构建现代Web应用</a>
+                            <span class="article-date">2023年10月15日</span>
+                        </div>
+                        <p class="article-excerpt">Vue 3带来了许多令人兴奋的新特性，其中最引人注目的是Composition API。本文将介绍如何使用Composition API构建可维护、可测试的现代Web应用程序，并分享一些最佳实践。</p>
+                        <div class="article-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">前端</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Composition API</span>
+                        </div>
+                    </article>
+                    
+                    <!-- 文章2 -->
+                    <article class="article">
+                        <div class="article-header">
+                            <a href="#" class="article-title">深入理解RESTful API设计原则</a>
+                            <span class="article-date">2023年10月10日</span>
+                        </div>
+                        <p class="article-excerpt">RESTful API是现代Web开发的核心。本文将深入探讨RESTful API的设计原则，包括资源命名、HTTP方法使用、状态码选择以及版本控制策略，帮助你设计出优雅且易于使用的API。</p>
+                        <div class="article-tags">
+                            <span class="tag">API设计</span>
+                            <span class="tag">后端</span>
+                            <span class="tag">REST</span>
+                            <span class="tag">最佳实践</span>
+                        </div>
+                    </article>
+                    
+                    <!-- 文章3 -->
+                    <article class="article">
+                        <div class="article-header">
+                            <a href="#" class="article-title">使用Docker容器化Node.js应用</a>
+                            <span class="article-date">2023年10月5日</span>
+                        </div>
+                        <p class="article-excerpt">Docker已经成为现代应用部署的标准。本文将详细介绍如何将Node.js应用容器化，包括Dockerfile编写、多阶段构建、环境变量管理以及Docker Compose的使用，帮助你实现高效的应用部署。</p>
+                        <div class="article-tags">
+                            <span class="tag">Docker</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">DevOps</span>
+                            <span class="tag">容器化</span>
+                        </div>
+                    </article>
+                    
+                    <!-- 文章4 -->
+                    <article class="article">
+                        <div class="article-header">
+                            <a href="#" class="article-title">Git高级技巧：提高团队协作效率</a>
+                            <span class="article-date">2023年9月28日</span>
+                        </div>
+                        <p class="article-excerpt">Git是每个开发者必备的工具，但很多人只使用了它的基本功能。本文将分享一些Git高级技巧，包括交互式变基、子模块管理、钩子脚本以及工作流优化，帮助团队提高协作效率。</p>
+                        <div class="article-tags">
+                            <span class="tag">Git</span>
+                            <span class="tag">版本控制</span>
+                            <span class="tag">团队协作</span>
+                            <span class="tag">开发工具</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- 分页 -->
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">下一页</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于博客</h3>
+                    <p>这是一个GitHub风格的博客，专注于分享编程技术、开发经验和开源项目。所有文章均为原创，遵循知识共享许可协议。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">所有文章</a></li>
+                        <li><a href="#">标签分类</a></li>
+                        <li><a href="#">时间归档</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> 电子邮件</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 GitHub风格博客. 保留所有权利. 使用 <i class="fas fa-heart" style="color:#f9826c;"></i> 构建</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为文章添加点击效果
+            const articles = document.querySelectorAll('.article');
+            articles.forEach(article => {
+                article.addEventListener('click', function(e)
